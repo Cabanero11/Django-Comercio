@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito</title>
-    {% load static %}   
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Tu Carrito</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
 </head>
 <body>
-    <h1>Carrito</h1>
+    <h1>Tu Carrito</h1>
+    {% if carrito %}
+        <ul>
+            {% for producto_id, cantidad in carrito.items %}
+                <li>{{ producto_id }}: {{ cantidad }}</li>
+            {% endfor %}
+        </ul>
+        <form method="post" action="{% url 'cerrar_sesion' %}">
+            {% csrf_token %}
+            <label for="direccion">Dirección de Entrega:</label>
+            <input type="text" name="direccion" id="direccion" required>
+            <button type="submit">Procesar Pedido</button>
+        </form>
+    {% else %}
+        <p>Tu carrito está vacío.</p>
+    {% endif %}
+    <a href="{% url 'tienda' %}">Seguir comprando</a>
 </body>
 </html>

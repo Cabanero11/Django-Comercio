@@ -4,15 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda</title>
-    {% load static %}   
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
 </head>
 <body>
     <h1>Tienda</h1>
-    <h2>Lista Productos</h2>
+    <a href="{% url 'homepage' %}">
+        <button type="button">Ir a Home</button>
+    </a>    
+    <form method="get">
+        <select name="categoria">
+            <option value="">Todas las categorías</option>
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+    <ul>
+        {% for producto in productos %}
+            <li>
+                <img src="{{ producto.imagen }}" class="responsive"> 
+                <br>
+                {{ producto.nombre }} - {{ producto.precio }}€
+                <form method="post" action="{% url 'carrito' %}">
+                    {% csrf_token %}
+                    <p> Descripcion: {{producto.descripcion}}</p>
+                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                    <button type="submit">Añadir al carrito</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

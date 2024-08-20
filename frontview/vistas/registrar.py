@@ -29,15 +29,14 @@ class Registrar(View):
 
         msg_error = None
         
-        user = Usuario(nombre=nombre, apellidos=apellidos,
-                       usuario=usuario, email=email, 
-                       contraseña=contraseña)
+        user = Usuario(nombre=nombre, apellidos=apellidos, usuario=usuario, email=email, contraseña=contraseña)
         
-        msg_error = self.validarUsuario()
+        msg_error = self.validarUsuario(user)
 
         if not msg_error:
             # Crear contraseña sino usuario, con django auth
             user.contraseña = make_password(user.contraseña)
+            user.save() # GUARDAR EN BD SINO DA ERROR
             return redirect('homepage')
         else:
             datos_registrar = {
@@ -49,23 +48,23 @@ class Registrar(View):
     # Mensajes de error posibles creo
     def validarUsuario(self, user):
         msg_error = None
-        if (not user.first_name): 
+        if (not user.nombre): 
             msg_error = "Por favor introduce un nombre !!"
-        elif len(user.first_name) < 3: 
+        elif len(user.nombre) < 3: 
             msg_error = 'Nombre debe tener mas de 3 caracteres'
-        elif not user.last_name: 
+        elif not user.apellidos: 
             msg_error = 'Porfa pon tus apellidos'
-        elif len(user.last_name) < 3: 
+        elif len(user.apellidos) < 3: 
             msg_error = 'Tus apellidos deben tener mas de 3 caracteres'
         elif not user.usuario: 
             msg_error = 'Porfa pon nombre Usuario chulo'
-        elif len(user.usuario) < 15: 
-            msg_error = 'Usuario debe tener menos de 15 caracteres'
-        elif len(user.password) < 5: 
+        elif len(user.usuario) < 4: 
+            msg_error = 'Usuario debe tener mas de 3 caracteres'
+        elif len(user.contraseña) < 5: 
             msg_error = 'Contraseña muy corta, minmo 5 caracteres'
         elif len(user.email) < 5: 
             msg_error = 'Email tiene que ser mas de 5 caracteres'
-        elif user.isExists(): 
+        elif user.existeUsuario(): 
             msg_error = 'Ya esta registrado ese email...'
 
         return msg_error

@@ -15,12 +15,13 @@ class IniciarSesion(View):
     
     def post(self, request): 
         email = request.POST.get('email') 
-        contraseña = request.POST.get('password') 
-        usuario = Usuario.get_customer_by_email(email) 
+        contraseña = request.POST.get('contraseña') 
+        usuario = Usuario.get_usuario_por_email(email) 
         msg_error = None
         if usuario:
             # Si coincide la contraseña 
-            flag = check_password(contraseña, usuario.password) 
+            flag = check_password(contraseña, usuario.contraseña) 
+            print(f'Contraseña: {contraseña} - User contraseña: {usuario.contraseña} - Email: {email}')
             if flag: 
                 request.session['usuario'] = usuario.id
                 # Si hay url de login, sino pal home
@@ -34,10 +35,10 @@ class IniciarSesion(View):
         else: 
             msg_error = 'Error Usuario !!'
 
-        print(f'User: {usuario} {contraseña}') 
+        print(f'Usuario: {usuario} {contraseña} inicio sesion') 
         return render(request, 'iniciar_sesion.html', {'error': msg_error}) 
     
 # Te manda al login otra vez
 def cerrar_sesion(request):
     request.session.clear()
-    return redirect('login')
+    return redirect('iniciar_sesion')

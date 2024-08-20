@@ -23,4 +23,4 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('frontview.urls'))
-] + debug_toolbar_urls() + static('static', document_root='css/frontview.css')
+] + debug_toolbar_urls() + static('static', document_root='css/frontview.css') + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

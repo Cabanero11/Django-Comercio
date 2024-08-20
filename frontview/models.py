@@ -24,8 +24,8 @@ class Categoria(models.Model):
 class Usuario(models.Model):
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=60)
-    usuario = models.CharField(max_length=20)
-    email = models.EmailField()
+    usuario = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(unique=True)
     contraseña = models.CharField(max_length=100)
 
     # Se registra y guarda en la BD (SQlite)
@@ -39,7 +39,7 @@ class Usuario(models.Model):
             return Usuario.objects.get(email=email)
         except Exception as e:
             print(f'Error al encontrar Usuario por email: {e}')
-            return False
+            return None
     
     # Si existe email o usuario ya creado
     def existeUsuario(self):

@@ -12,15 +12,14 @@ from frontview.vistas.pedidos import PedidoVista
 
 urlpatterns = [
     # En el base
-    path('', Index.as_view(), name='home_page'),
+    path('', Index.as_view(), name='homepage'),
     path('tienda', tienda, name='tienda'),
 
-    path('login', IniciarSesion.as_view(), name='iniciar_sesion'),
-    path('logout', cerrar_sesion, name='cerrar_sesion'),
-    path('signup', Registrar.as_view(), name='registrar'),
+    path('iniciar_sesion', IniciarSesion.as_view(), name='iniciar_sesion'),
+    path('cerrar_sesion', cerrar_sesion, name='cerrar_sesion'),
+    path('registrar', Registrar.as_view(), name='registrar'),
 
-    path('cerrar', Cerrar_sesion.as_view()),
+    path('cerrar', Cerrar_sesion.as_view(), name='cerrar_sesion'),
     path('carrito', Carrito.as_view(), name='carrito'),
     path('pedidos', PedidoVista.as_view(), name='pedidos'),
-
 ]

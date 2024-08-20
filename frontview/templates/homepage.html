@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    {% load static %}   
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Inicio</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
 </head>
 <body>
-    <h1>Bienvenido a </h1>
+    <h1>Bienvenido a la Tienda</h1>
+    <a href="{% url 'tienda' %}">Ir a la tienda</a>
+    {% if request.session.usuario %}
+        <a href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+    {% else %}
+        <a href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a>
+        <a href="{% url 'registrar' %}">Registrarse</a>
+    {% endif %}
 </body>
 </html>

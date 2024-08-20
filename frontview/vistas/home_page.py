@@ -45,7 +45,10 @@ class Index(View):
     
     # Get
     def get(self, request):
-        return HttpResponseRedirect(f'/tienda{request.get_full_path()[1:]}')
+        # Para re
+        if request.GET.get('action') == 'redirect_to_tienda':
+            return HttpResponseRedirect('/tienda')
+        return render(request, 'homepage.html')
     
 
 # Fuera de Index
@@ -69,6 +72,6 @@ def tienda(request):
     data['productos'] = productos
     data['categorias'] = categorias
 
-    print(f'Usuario: {request.session.get('email')}')
+    print(f'Usuario home page: {request.session.get('email')}')
 
-    return render(request, 'tienda.html', data)
+    return render(request, 'homepage.html', data)
