@@ -30,7 +30,7 @@ class Carrito(View):
         request.session['carrito'] = carrito
         print(f'Carrito actualizado: {request.session["carrito"]}')
         
-        return redirect('tienda')
+        return redirect('carrito')
 
     def get(self, request):
         return redirect('tienda')

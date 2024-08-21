@@ -74,4 +74,4 @@ def tienda(request):
 
     print(f'Usuario home page: {request.session.get('email')}')
 
-    return render(request, 'homepage.html', data)
+    return render(request, 'tienda.html', data)

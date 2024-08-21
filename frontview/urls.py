@@ -16,7 +16,7 @@ urlpatterns = [
     path('tienda', tienda, name='tienda'),
 
     path('iniciar_sesion', IniciarSesion.as_view(), name='iniciar_sesion'),
-    path('cerrar_sesion', cerrar_sesion, name='cerrar_sesion'),
+    path('cerrar', cerrar_sesion, name='cerrar_sesion'),
     path('registrar', Registrar.as_view(), name='registrar'),
 
     path('cerrar', Cerrar_sesion.as_view(), name='cerrar_sesion'),

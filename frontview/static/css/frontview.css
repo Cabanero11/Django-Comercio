@@ -1,12 +1,73 @@
 /* El css personalizado*/
-
+/*
+#08D9D6 - azul
+#252A34 - negro
+#FF2E63 - rosa
+#EAEAEA - gris
+*/
 
 h1 {
-    color: black;
+    color: #252A34;
+}
+
+body {
+    background-color: #EAEAEA;
 }
 
 .responsive {
     width: 100%;
     max-width: 200px;
-    height: auto;
+    height: 80%;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #252A34; 
+}
+
+.card-img-top {
+    width: 100%;
+    height: 50%; /* Sino a 50% va bien*/
+}
+
+.mt-auto {
+    margin-top: auto; /* Hace que el botón se alinee al final del contenido */
+}
+
+.bg-color {
+    background-color: #FF2E63;
+}
+
+.btn {
+    background-color: #08D9D6;
+    border-color: #08D9D6;
+}
+
+.btn-secondary {
+    background-color: #252A34;
+    border-color: #252A34;
+}
+
+.btn:hover {
+    background-color: #1fabbd;
+    border-color: #1fabbd;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(38, 44, 55);
+    border-color: rgb(38, 44, 55);
+}
+
+
+.btn-margin-bottom {
+    margin-bottom: 10%;
 }

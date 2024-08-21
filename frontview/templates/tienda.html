@@ -5,36 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda</title>
     {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
 </head>
 <body>
-    <h1>Tienda</h1>
-    <a href="{% url 'homepage' %}">
-        <button type="button">Ir a Home</button>
-    </a>    
-    <form method="get">
-        <select name="categoria">
-            <option value="">Todas las categorías</option>
-            {% for categoria in categorias %}
-                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-color">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">MiTienda</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-secondary" href="{% url 'carrito' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+                            </svg>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        {% if request.session.usuario %}
+                            <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carrusel de Productos Destacados -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            {% for producto in productos_destacados %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ producto.imagen }}" class="d-block w-100" alt="{{ producto.nombre }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ producto.nombre }}</h5>
+                        <p>{{ producto.precio }}€</p>
+                    </div>
+                </div>
             {% endfor %}
-        </select>
-        <button type="submit">Filtrar</button>
-    </form>
-    <ul>
-        {% for producto in productos %}
-            <li>
-                <img src="{{ producto.imagen }}" class="responsive"> 
-                <br>
-                {{ producto.nombre }} - {{ producto.precio }}€
-                <form method="post" action="{% url 'carrito' %}">
-                    {% csrf_token %}
-                    <p> Descripcion: {{producto.descripcion}}</p>
-                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                    <button type="submit">Añadir al carrito</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- Filtros de búsqueda y categorías -->
+    <div class="container mt-5">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <select name="categoria" class="form-select">
+                    <option value="">Todas las categorías</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="buscar" placeholder="Buscar productos...">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Listado de productos -->
+    <div class="container mt-4">
+        <div class="row">
+            {% for producto in productos %}
+                <div class="col-md-4 mb-4">
+                    <img src="{{ producto.imagen }}" class="card-img-top" alt="{{ producto.nombre }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ producto.nombre }}</h5>
+                        <p class="card-text">{{ producto.descripcion }}</p>
+                        <p class="card-text"><strong>{{ producto.precio }}€</strong></p>
+                        <form method="post" action="{% url 'carrito' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                            <button type="submit" class="btn btn-success w-100 btn-margin-bottom">Añadir al carrito</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-auto">
+        <div class="container p-4">
+            <p>Contacto: tienda@example.com</p>
+            <p>&copy; 2024 MiTienda. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

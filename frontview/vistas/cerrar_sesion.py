@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect 
-from django.contrib.auth.hashers import check_password 
 from frontview.models import Usuario, Productos, Pedido
 from django.views import View 
 
@@ -22,4 +21,4 @@ class Cerrar_sesion(View):
             pedido.save() 
 
         request.session['carrito'] = {} 
-        return redirect('carrito')
+        return redirect('homepage')
