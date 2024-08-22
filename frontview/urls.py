@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from frontview.vistas.home_page import Index, tienda
 from frontview.vistas.iniciar_sesion import IniciarSesion, cerrar_sesion
-from frontview.vistas.carrito import Carrito
+from frontview.vistas.carrito import Carrito, limpiar_carrito
 from frontview.vistas.registrar import Registrar
 from frontview.vistas.cerrar_sesion import Cerrar_sesion
 from frontview.vistas.pedidos import PedidoVista
@@ -21,5 +21,6 @@ urlpatterns = [
 
     path('cerrar', Cerrar_sesion.as_view(), name='cerrar_sesion'),
     path('carrito', Carrito.as_view(), name='carrito'),
+    path('limpiar_carrito', limpiar_carrito, name='limpiar_carrito'),
     path('pedidos', PedidoVista.as_view(), name='pedidos'),
 ]

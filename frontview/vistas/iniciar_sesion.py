@@ -24,6 +24,7 @@ class IniciarSesion(View):
             print(f'Contraseña: {contraseña} - User contraseña: {usuario.contraseña} - Email: {email}')
             if flag: 
                 request.session['usuario'] = usuario.id
+                request.session['usuario_nombre'] = usuario.nombre
                 # Si hay url de login, sino pal home
                 if IniciarSesion.url: 
                     return HttpResponseRedirect(IniciarSesion.url) 

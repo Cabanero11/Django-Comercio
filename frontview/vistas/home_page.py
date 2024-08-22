@@ -39,6 +39,8 @@ class Index(View):
 
         # Creamos sesion, e printeamos
         request.session['carrito'] = carrito
+        # Contador de elementos del carrito
+        request.session['carrito_contador'] = sum(carrito.values())
         print('carrito', request.session['cart'])
         
         return redirect('homepage')
@@ -57,6 +59,7 @@ def tienda(request):
     # No carro, no sesion :p
     if not carrito:
         request.session['carrito'] = {}
+        request.session['carrito_contador'] = 0 # Crear contador del carrito
 
     productos = None
     categorias = Categoria.get_all_categorias()
@@ -71,7 +74,9 @@ def tienda(request):
     data = {}
     data['productos'] = productos
     data['categorias'] = categorias
+    data['carrito_contador'] = request.session.get('carrito_contador', 0)
+    print(f'Carrito cont: {request.session.get('carrito_contador')}')
 
-    print(f'Usuario home page: {request.session.get('email')}')
+    print(f'Usuario home page: {request.session.get('usuario')}')
 
     return render(request, 'tienda.html', data)
