@@ -37,7 +37,7 @@ class Registrar(View):
             # Crear contraseña sino usuario, con django auth
             user.contraseña = make_password(user.contraseña)
             user.save() # GUARDAR EN BD SINO DA ERROR
-            return redirect('homepage')
+            return redirect('iniciar_sesion')
         else:
             datos_registrar = {
                 'error': msg_error,

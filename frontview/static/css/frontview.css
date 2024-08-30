@@ -1,9 +1,9 @@
 /* El css personalizado*/
 /*
-#08D9D6 - azul
-#252A34 - negro
-#FF2E63 - rosa
-#EAEAEA - gris
+#08D9D6 - azul - principal
+#252A34 - negro - secundario
+#FF2E63 - rosa - fondo header
+#EAEAEA - gris - fondo body
 */
 
 h1 {
@@ -80,4 +80,65 @@ body {
 
 #carrito-contador {
     background-color: #FF2E63!;
+}
+
+a.iconos-redes {
+    text-decoration: none;
+}
+
+
+/* Fondo del footer */
+.footer-bg {
+    background-color: #252A34; /* Negro - secundario */
+}
+
+/* Sección de redes sociales */
+.social-media-section {
+    background-color: #252A34; /* Negro - secundario */
+}
+
+/* Texto de redes sociales */
+.social-text span {
+    color: #EAEAEA; /* Gris - fondo body */
+}
+
+/* Estilo para iconos de redes sociales */
+.iconos-redes svg {
+    color: #08D9D6; /* Azul - principal */
+    transition: color 0.3s;
+}
+
+.iconos-redes svg:hover {
+    color: #FF2E63; /* Rosa - fondo header al pasar el cursor */
+}
+
+/* Sección de links en el footer */
+.footer-links {
+    background-color: #252A34; /* Negro - secundario */
+    padding-top: 20px;
+}
+
+.footer-links h6 {
+    color: #08D9D6; /* Azul - principal */
+    font-weight: bold;
+}
+
+.footer-links a {
+    color: #EAEAEA; /* Gris - fondo body */
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #FF2E63; /* Rosa - fondo header al pasar el cursor */
+}
+
+/* Descripción de la empresa en el footer */
+.footer-description {
+    color: #EAEAEA; /* Gris - fondo body */
+}
+
+/* Copyright */
+.footer-copyright {
+    background-color: #252A34; /* Negro - secundario */
+    color: #EAEAEA; /* Gris - fondo body */
 }

@@ -3,6 +3,8 @@ from django.views import View
 from frontview.models import Productos
 
 class Carrito(View):
+
+    # Añadir al carrito
     def post(self, request):
         producto_id = request.POST.get('producto')
         borrar = request.POST.get('borrar')
@@ -31,9 +33,9 @@ class Carrito(View):
         request.session['carrito'] = carrito
         request.session['carrito_contador'] = sum(carrito.values())
         print(f'Carrito actualizado: {request.session["carrito"]}')
-        return redirect('carrito')
+        return redirect('tienda')
 
-
+    # Icono carrito
     def get(self, request):
         carrito = request.session.get('carrito', {})
         productos = []
