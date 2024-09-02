@@ -58,7 +58,7 @@ class Carrito(View):
         return render(request, 'carrito.html', {'productos': productos})
 
 
-# Función para limpiar el carrito
+# Función para limpiar el carrito entero
 def limpiar_carrito(request):
     # Obtenemos el ID del producto a eliminar
     producto_id = request.POST.get('producto_id')
@@ -78,6 +78,7 @@ def limpiar_carrito(request):
     
     return redirect('carrito')
 
+# Limpiar un producto en especifico
 def limpiar_producto_carro(request, producto_id):
     carrito = request.session.get('carrito', {})
 
@@ -85,6 +86,47 @@ def limpiar_producto_carro(request, producto_id):
         carrito.pop(producto_id)
 
     print(f'Eliminado {producto_id}')
+
+    # Cambiar a carro actualizado, sin el producto
+    request.session['carrito'] = carrito
+    request.session['carrito_contador'] = sum(carrito.values())
+
+    return redirect('carrito')
+
+# Incrementar la cantidad del producto que esta en el carrito
+def incrementar_producto(request):
+    carrito = request.session.get('carrito', {})
+
+    # Obtenemos el ID del producto
+    producto_id = request.POST.get('producto_id')
+
+    cantidad = carrito.get(producto_id)
+
+    if cantidad:
+        carrito[producto_id] = cantidad + 1
+
+    print(f'Incrementado {producto_id}')
+
+    # Cambiar a carro actualizado, sin el producto
+    request.session['carrito'] = carrito
+    request.session['carrito_contador'] = sum(carrito.values())
+
+    return redirect('carrito')
+
+# Decrementar la cantidad del producto que esta en el carrito
+def decrementar_producto(request):
+    carrito = request.session.get('carrito', {})
+
+    # Obtenemos el ID del producto
+    producto_id = request.POST.get('producto_id')
+
+    cantidad = carrito.get(producto_id)
+
+    # -1 si hay 2 elementos solo
+    if cantidad > 1:
+        carrito[producto_id] = cantidad - 1
+
+    print(f'Decrementado {producto_id}')
 
     # Cambiar a carro actualizado, sin el producto
     request.session['carrito'] = carrito

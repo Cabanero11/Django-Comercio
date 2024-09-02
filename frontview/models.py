@@ -27,6 +27,9 @@ class Usuario(models.Model):
     usuario = models.CharField(max_length=20, unique=True)
     email = models.EmailField(unique=True)
     contraseña = models.CharField(max_length=100)
+    # Finalizar pedido
+    direccion = models.CharField(max_length=100, default='', blank=True)
+    tefelono = models.CharField(max_length=9, default='', blank=True)
 
     # Se registra y guarda en la BD (SQlite)
     def regristrar(self):
@@ -86,7 +89,7 @@ class Pedido(models.Model):
     cantidad = models.IntegerField(default=1)
     precio = models.FloatField()
     direccion = models.CharField(max_length=100, default='', blank=True)
-    tefelono = models.CharField(max_length=15, default='', blank=True)
+    tefelono = models.CharField(max_length=9, default='', blank=True)
     fecha = models.DateField(default=datetime.today)
     estado_pedido = models.BooleanField(default=False)
 
@@ -96,4 +99,4 @@ class Pedido(models.Model):
 
     @staticmethod
     def get_pedido_usuario(id_usuario):
-        return Pedido.objects.filter(usuario=id_usuario).order_by('-date')
+        return Pedido.objects.filter(usuario=id_usuario, estado_pedido=False).order_by('-fecha')
