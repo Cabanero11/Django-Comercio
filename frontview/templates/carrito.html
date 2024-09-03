@@ -7,28 +7,46 @@
     {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
+    <link rel="icon" href="{%static 'images/icono.ico '%}">
 </head>
 <body>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-color">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'homepage' %}">MiTienda</a>
+            <button type="button" class="btn-logo" onclick="window.location.href='{% url 'homepage' %}'">
+                <img src="/static/images/Logo.png" class="milogo" alt="Logo de MiTienda">
+            </button>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tienda' %}">Tienda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'carrito' %}">Carrito</a>
-                    </li>
+                    <form method="post">
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-secondary btn-arriba" onclick="window.location.href='{% url 'carrito' %}'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+                                </svg>
+                                <span class="badge bg-primary rounded-pill">{{ carrito_contador }}</span>
+                            </button>
+                        </li>
+                    </form>
                     <li class="nav-item">
                         {% if request.session.usuario %}
-                            <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                        <button type="button" class="btn btn-secondary btn-arriba" onclick="window.location.href='{% url 'cerrar_sesion' %}'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                            Cerrar Sesion
+                        </button>
                         {% else %}
-                            <a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a>
+                            <button type="button" class="btn btn-secondary btn-arriba" onclick="window.location.href='{% url 'iniciar_sesion' %}'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                </svg>
+                                Iniciar Sesion
+                            </button>
                         {% endif %}
                     </li>
                 </ul>
@@ -36,72 +54,108 @@
         </div>
     </nav>
 
-    <!-- Contenido principal -->
-    <div class="container mt-5">
-        <h1>Tu Carrito</h1>
-        {% if productos %}
-            <ul class="list-group mb-3">
-                {% for item in productos %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            {{ item.producto.nombre }} - {{ item.cantidad }} unidades
-                        </div>
-                        <form method="post" action="{% url 'decrementar_producto' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                            <!-- Si es 1 esta desabilitado sino, si se clicka -->
-                            <button type="submit" class="mr-3 btn btn-secondary btn-arriba" {% if item.cantidad == 1 %} disabled {% endif %}>
-                                
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
-                                  </svg>
-                            </button>
-                        </form>
-                        <span class="badge bg-primary rounded-pill">{{ item.cantidad }}</span>
-                        <form method="post" action="{% url 'incrementar_producto' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="mr-3 btn btn-secondary btn-arriba">
-                                <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                  </svg>
-                            </button>
-                        </form>
-                        <form method="post" action="{% url 'limpiar_carrito' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                            <button type="submit" class="mr-3 btn btn-secondary btn-arriba">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                  </svg>
-                            </button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
+<!-- Contenido principal Carrito-->
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Tu Carrito</h1>
+    {% if productos %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col" class="text-center">Cantidad</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in productos %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ item.producto.imagen }}" class="imagen-carrito mr-3" alt="{{ item.producto.nombre }}" style="width: 60px; height: 60px; object-fit: cover;">
+                                    <span>{{ item.producto.nombre }}</span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-primary rounded-pill">{{ item.cantidad }}</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <!-- Decrementar cantidad -->
+                                    <form method="post" action="{% url 'decrementar_producto' %}" class="mr-3">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+                                        <button type="submit" class="btn btn-secondary btn-sm" {% if item.cantidad == 1 %} disabled {% endif %}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    <!-- Incrementar cantidad -->
+                                    <form method="post" action="{% url 'incrementar_producto' %}" class="mr-3">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+                                        <button type="submit" class="btn btn-secondary btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    <!-- Eliminar producto -->
+                                    <form method="post" action="{% url 'limpiar_carrito' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
             <a href="{% url 'tienda' %}" class="btn btn-secondary">Seguir Comprando</a>
-            <form method="post" action="{% url 'finalizar_pedido' %}">
-                {% csrf_token %}
-                {% if request.session.usuario %}
-                <button type="submit" class="btn btn-primary">Ir a pagar</button>
-                {% else %}
-                <div class="alert alert-danger">
-                    <p>Inicia sesión antes de pagar para proceder con el pago</p>
-                    <a href="{% url 'iniciar_sesion' %}" class="btn">Iniciar Sesión</a>
-                </div>  
+            <div>
+                {% if not request.session.usuario %}
+                    <div class="alert alert-danger mb-2">
+                        <p>Inicia sesión antes de pagar para proceder con el pago</p>
+                        <a href="{% url 'iniciar_sesion' %}" class="btn btn-warning">Iniciar Sesión</a>
+                    </div>  
                 {% endif %}
-            </form>
-        {% else %}
-            <p>No hay productos en tu carrito.</p>
-            <a href="{% url 'tienda' %}" class="btn btn-primary">Ir a la tienda</a>
-        {% endif %}
+                <form method="post" action="{% url 'finalizar_pedido' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" {% if not request.session.usuario %}disabled{% endif %}>Ir a pagar</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col" class="text-center">Cantidad</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+        </table>
     </div>
+        <p>No hay productos en tu carrito.</p>
+        <a href="{% url 'tienda' %}" class="btn btn-primary">Ir a la tienda</a>
+    {% endif %}
+</div>
 
     <!-- Footer -->
-<footer class="footer-bg text-center text-lg-start text-muted">
+<footer class="footer-bg text-center text-lg-start text-muted mt-3">
     <!-- Section: Social media -->
     <section class="social-media-section d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <!-- Left -->

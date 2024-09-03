@@ -6,12 +6,17 @@
 #EAEAEA - gris - fondo body
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
+
 h1 {
     color: #252A34;
 }
 
 body {
     background-color: #EAEAEA;
+    font-family:'Open Sans';
 }
 
 .responsive {
@@ -51,6 +56,7 @@ body {
     background-color: #08D9D6;
     border-color: #08D9D6;
 }
+
 
 .btn-secondary {
     background-color: #252A34;
@@ -141,4 +147,106 @@ a.iconos-redes {
 .footer-copyright {
     background-color: #252A34; /* Negro - secundario */
     color: #EAEAEA; /* Gris - fondo body */
+}
+
+
+/* CSS para alinear contenido e imagen en la sección del banner */
+
+.banner {
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: space-between; /* Asegura que la imagen esté a la derecha y el contenido a la izquierda */
+    padding: 0px; /* Añade espacio alrededor del contenido */
+    margin-left: 0.5em;
+}
+
+.banner .content {
+    flex: 1;
+    max-width: 50%; /* Asegura que el contenido ocupe solo la mitad de la pantalla */
+    padding-right: 20px; /* Espacio entre el contenido y la imagen */
+}
+
+.banner .image {
+    flex: 1;
+    max-width: 50%; /* Asegura que la imagen ocupe solo la mitad de la pantalla */
+    display: flex;
+    justify-content: flex-end; /* Asegura que la imagen esté a la derecha */
+}
+
+.banner .image img {
+    max-width: 100%; /* La imagen ocupará todo el ancho posible sin desbordar */
+    height: auto;
+    object-fit: cover; /* Mantiene la proporción de la imagen */
+}
+
+.milogo {
+    max-height: 50px;  
+    height: auto;  
+    width: auto; 
+}
+
+.imagen-carrito {
+    max-height: 50px;  
+    height: auto;  
+    width: auto; 
+}
+
+.btn-logo {
+    background-color: #143447;
+    border-color: #143447;
+    border-radius: 10px;
+}
+
+
+.btn-logo:hover {
+    border-color: #08D9D6;
+    border-radius: 13px;
+}
+
+
+
+/* Estilos para los formularios */
+
+
+
+.form-container {
+    max-width: 600px; /* Define un ancho máximo para el formulario */
+    width: 100%; /* Asegura que el formulario sea responsive */
+}
+
+.form-control {
+    border: 1.5px solid #252A34;
+    border-radius: 10px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 5px; 
+    font-size: 1rem; 
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #08D9D6;
+    border-color: #08D9D6;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    padding: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #06b1ad;
+    transform: scale(1.02);
+}
+
+.btn-outline-secondary {
+    border-radius: 0 10px 10px 0; /* Redondea solo el borde derecho del botón */
+}
+
+.shadow-lg {
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Agrega una sombra suave para resaltar el formulario */
+}
+
+h1.text-center {
+    color: #252A34;
+}
+
+input[type="password"] {
+    border-radius: 10px 0 0 10px; /* Redondea solo el borde izquierdo del input */
 }
