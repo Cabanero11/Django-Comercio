@@ -130,7 +130,7 @@
                         <a href="{% url 'iniciar_sesion' %}" class="btn btn-warning">Iniciar Sesión</a>
                     </div>  
                 {% endif %}
-                <form method="post" action="{% url 'finalizar_pedido' %}">
+                <form method="post" action="{% url 'confirmar_pago' %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary" {% if not request.session.usuario %}disabled{% endif %}>Ir a pagar</button>
                 </form>

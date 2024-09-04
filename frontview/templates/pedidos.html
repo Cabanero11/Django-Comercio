@@ -56,7 +56,7 @@
           <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Tu Carrito</span>
-                <span class="badge badge-secondary badge-pill">{{ carrito|length }}</span>
+                <span class="text-muted">{{ carrito|length }}</span>
             </h4>
             <ul class="list-group mb-3">
                 {% for item in carrito %}
@@ -83,128 +83,138 @@
           </div>
       
           <!-- Formulario de Dirección y Pago -->
-          <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Formulario de pago</h4>
-            <form method="post" action="{% url 'finalizar_pedido' %}">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="nombre">Nombre</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" required>
-                  <div class="invalid-feedback">
-                    Nombre válido es requerido.
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="apellidos">Apellido</label>
-                  <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-                  <div class="invalid-feedback">
-                    Apellido válido es requerido.
-                  </div>
-                </div>
+<div class="col-md-8 order-md-1">
+  <h4 class="mb-3">Dirección de Facturación</h4>
+  <form method="post" action="{% url 'finalizar_pedido' %}">
+      {% csrf_token %}
+      <div class="row">
+          <div class="col-md-6 mb-3">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+              <div class="invalid-feedback">
+                  Nombre válido es requerido.
               </div>
-      
-              <div class="mb-3">
-                <label for="email">Correo Electrónico <span class="text-muted">(Opcional)</span></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="tucorreo@ejemplo.com">
-                <div class="invalid-feedback">
-                  Por favor, introduce una dirección de correo válida.
-                </div>
-              </div>
-      
-              <div class="mb-3">
-                <label for="direccion">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Calle 123" required>
-                <div class="invalid-feedback">
-                  Por favor, introduce tu dirección de envío.
-                </div>
-              </div>
-      
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="country">País</label>
-                  <select class="custom-select d-block w-100" id="country" name="country" required>
-                    <option value="">Selecciona...</option>
-                    <option>España</option>
-                    <option>Portugal</option>
-                    <!-- Agregar más países si es necesario -->
-                  </select>
-                  <div class="invalid-feedback">
-                    Por favor selecciona un país válido.
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="state">Estado</label>
-                  <select class="custom-select d-block w-100" id="state" name="state" required>
-                    <option value="">Selecciona...</option>
-                    <option>Alicante</option>
-                    <option>Valencia</option>
-                    <option>Madrid</option>
-                    <option>Barcelona</option>
-                    <option>Dolores</option>
-                    <option>Oporto</option>
-                    <!-- Agregar más estados si es necesario -->
-                  </select>
-                  <div class="invalid-feedback">
-                    Por favor selecciona un estado válido.
-                  </div>
-                </div>
-              </div>
-              <hr class="mb-4">
-      
-              <h4 class="mb-3">Pago</h4>
-      
-              <div class="d-block my-3">
-                <div class="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                  <label class="custom-control-label" for="credit">Tarjeta de Crédito</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="debit">Tarjeta de Débito</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                  <label class="custom-control-label" for="paypal">PayPal</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="cc-name">Nombre en la tarjeta</label>
-                  <input type="text" class="form-control" id="cc-name" name="cc_name" placeholder="" required>
-                  <small class="text-muted">Nombre completo como aparece en la tarjeta</small>
-                  <div class="invalid-feedback">
-                    Se requiere el nombre en la tarjeta.
-                  </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="cc-number">Número de tarjeta</label>
-                  <input type="text" class="form-control" id="cc-number" name="cc_number" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Se requiere el número de la tarjeta.
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3 mb-3">
-                  <label for="cc-expiration">Expiración</label>
-                  <input type="text" class="form-control" id="cc-expiration" name="cc_expiration" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Fecha de expiración requerida.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="cc-cvv">CVV</label>
-                  <input type="text" class="form-control" id="cc-cvv" name="cc_cvv" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Código de seguridad requerido.
-                  </div>
-                </div>
-              </div>
-              <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizar Compra</button>
-            </form>
           </div>
+          <div class="col-md-6 mb-3">
+              <label for="apellidos">Apellido</label>
+              <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+              <div class="invalid-feedback">
+                  Apellido válido es requerido.
+              </div>
+          </div>
+      </div>
+
+      <div class="mb-3">
+          <label for="email">Correo Electrónico <span class="text-muted">(Opcional)</span></label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="tucorreo@ejemplo.com">
+          <div class="invalid-feedback">
+              Por favor, introduce una dirección de correo válida.
+          </div>
+      </div>
+
+      <div class="mb-3">
+          <label for="direccion">Dirección</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Calle 123" required>
+          <div class="invalid-feedback">
+              Por favor, introduce tu dirección de envío.
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6 mb-3">
+              <label for="country">País</label>
+              <select class="form-control" id="country" name="country" required>
+                  <option value="">Selecciona...</option>
+                  <option>España</option>
+                  <option>Portugal</option>
+                  <!-- Agregar más países si es necesario -->
+              </select>
+              <div class="invalid-feedback">
+                  Por favor selecciona un país válido.
+              </div>
+          </div>
+          <div class="col-md-6 mb-3">
+              <label for="state">Estado</label>
+              <select class="form-control" id="state" name="state" required>
+                  <option value="">Selecciona... 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-square" viewBox="0 0 16 16">
+                      <path d="M3.626 6.832A.5.5 0 0 1 4 6h8a.5.5 0 0 1 .374.832l-4 4.5a.5.5 0 0 1-.748 0z"/>
+                      <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                    </svg>
+                  </option>
+                  <option>Alicante</option>
+                  <option>Valencia</option>
+                  <option>Madrid</option>
+                  <option>Barcelona</option>
+                  <option>Dolores</option>
+                  <option>Oporto</option>
+                  <!-- Agregar más estados si es necesario -->
+              </select>
+              <div class="invalid-feedback">
+                  Por favor selecciona un estado válido.
+              </div>
+          </div>
+      </div>
+      <hr class="mb-4">
+
+      <h4 class="mb-3">Método de Pago</h4>
+      <div class="mb-3">
+          <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="credit" value="credit" checked required>
+              <label class="form-check-label" for="credit">Tarjeta de Crédito</label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="debit" value="debit" required>
+              <label class="form-check-label" for="debit">Tarjeta de Débito</label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal" required>
+              <label class="form-check-label" for="paypal">PayPal</label>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6 mb-3">
+              <label for="cc-name">Nombre en la tarjeta</label>
+              <input type="text" class="form-control" id="cc-name" name="cc_name" placeholder="" required>
+              <small class="text-muted">Nombre completo como aparece en la tarjeta</small>
+              <div class="invalid-feedback">
+                  Se requiere el nombre en la tarjeta.
+              </div>
+          </div>
+          <div class="col-md-6 mb-3">
+              <label for="cc-number">Número de tarjeta</label>
+              <input type="text" class="form-control" id="cc-number" name="cc_number" placeholder="" required>
+              <div class="invalid-feedback">
+                  Se requiere el número de la tarjeta.
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-3 mb-3">
+              <label for="cc-expiration">Expiración</label>
+              <input type="text" class="form-control" id="cc-expiration" name="cc_expiration" placeholder="MM/AA" required>
+              <div class="invalid-feedback">
+                  Fecha de expiración requerida.
+              </div>
+          </div>
+          <div class="col-md-3 mb-3">
+              <label for="cc-cvv">CVV</label>
+              <input type="text" class="form-control" id="cc-cvv" name="cc_cvv" placeholder="123" required>
+              <div class="invalid-feedback">
+                  Código de seguridad requerido.
+              </div>
+          </div>
+          </div>
+              <hr class="mb-4">
+            <form method="post" action="{% url 'confirmar_pago' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg w-100">Finalizar Pago</button>
+            </form>
+        </form>
+        </div>
+
         </div>
       </div>
 
