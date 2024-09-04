@@ -7,7 +7,7 @@
     {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
-    <link rel="icon" href="{%static 'images/icono.ico '%}">
+    <link rel="icon" href="{%static 'images/icono.ico'%}">
 </head>
 <body>
     <!-- Navbar -->
@@ -56,23 +56,35 @@
     </nav>
 
     <!-- Contenido principal -->
-    <div id="wrapper" class="divided">
-        <!-- One -->
-        <section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
-            <div class="content">
-                <h1>Bienvenido a la Tienda</h1>
-                <p class="major">Tienda de ropa y mas mavarillas !</p>
-                <ul class="actions stacked">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'tienda' %}'">
-                        Ir a la Tienda
-                    </button>
-                </ul>
+<div id="wrapper" class="divided">
+    <!-- One -->
+    <section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+        <div class="content">
+            <h1>Bienvenido a la Tienda</h1>
+            <p class="major">Tienda de ropa y más maravillas!</p>
+            <ul class="actions stacked">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'tienda' %}'">
+                    Ir a la Tienda
+                </button>
+            </ul>
+        </div>
+        <div class="image">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2500">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/static/images/Tienda1.jpg" class="d-block w-100" alt="Imagen de la tienda 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/images/Tienda2.jpg" class="d-block w-100" alt="Imagen de la tienda 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/images/Tienda3.jpg" class="d-block w-100" alt="Imagen de la tienda 3">
+                    </div>
+                </div>
             </div>
-            <div class="image">
-                <img src="/static/images/Tienda.jpg" alt="Imagen de la tienda" />
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
     <!-- Footer -->
 <footer class="footer-bg text-center text-lg-start text-muted">
@@ -227,7 +239,6 @@
     <!-- Copyright -->
 </footer>
 <!-- Footer -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

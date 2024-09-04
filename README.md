@@ -5,5 +5,5 @@ Comercio online creado con Django
 
 
 # TODO:
-- Pedidos me lleva, pero no sale el carrito 
-- Mejorar frontend
+- Vista de los Pedidos parecida a carrito
+- Vista de usuario si eso
