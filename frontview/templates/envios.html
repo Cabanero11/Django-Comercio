@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Carrito</title>
+    <title>Envios</title>
     {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/frontview.css' %}">
@@ -56,15 +56,15 @@
 
 <!-- Contenido principal Carrito-->
 <div class="container mt-5">
-    <h1 class="mb-4 text-center">Tu Carrito</h1>
+    <h1 class="mb-4 text-center">Tus envios</h1>
     {% if productos %}
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Producto</th>
-                        <th scope="col" class="text-center">Cantidad</th>
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th scope="col">Pedido</th>
+                        <th scope="col" class="text-center">Estado</th>
+                        <th scope="col" class="text-center">Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,49 +72,14 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ item.producto.imagen }}" class="imagen-carrito mr-3" alt="{{ item.producto.nombre }}" style="width: 60px; height: 60px; object-fit: cover;">
                                     <span>{{ item.producto.nombre }}</span>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-primary rounded-pill">{{ item.cantidad }}</span>
+                                <span class="badge bg-primary rounded-pill">{{ item.estado_pedido }}</span>
                             </td>
                             <td class="text-center">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <!-- Decrementar cantidad -->
-                                    <form method="post" action="{% url 'decrementar_producto' %}" class="mr-3">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                                        <button type="submit" class="btn btn-secondary btn-sm" {% if item.cantidad == 1 %} disabled {% endif %}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                    <!-- Incrementar cantidad -->
-                                    <form method="post" action="{% url 'incrementar_producto' %}" class="mr-3">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                                        <button type="submit" class="btn btn-secondary btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                    <!-- Eliminar producto -->
-                                    <form method="post" action="{% url 'limpiar_carrito' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
+                                <span class="badge bg-primary rounded-pill">{{ item.fecha }}</span>
                             </td>
                         </tr>
                     {% endfor %}
@@ -123,33 +88,21 @@
         </div>
         <div class="d-flex justify-content-between align-items-center mt-4">
             <a href="{% url 'tienda' %}" class="btn btn-secondary">Seguir Comprando</a>
-            <div>
-                {% if not request.session.usuario %}
-                    <div class="alert alert-danger mb-2">
-                        <p>Inicia sesión antes de pagar para proceder con el pago</p>
-                        <a href="{% url 'iniciar_sesion_carrito' %}" class="btn btn-warning">Iniciar Sesión</a>
-                    </div>  
-                {% endif %}
-                <form method="post" action="{% url 'confirmar_pago' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" {% if not request.session.usuario %}disabled{% endif %}>Ir a pagar</button>
-                </form>
-            </div>
         </div>
     {% else %}
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col" class="text-center">Cantidad</th>
-                    <th scope="col" class="text-center">Acciones</th>
+                    <th scope="col">Pedido</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Fecha</th>
                 </tr>
             </thead>
             <tbody>
         </table>
     </div>
-        <p class="alert alert-danger mb-2">No hay productos en tu carrito.</p>
+        <p>No hay pedidos en tu cuenta.</p>
         <a href="{% url 'tienda' %}" class="btn btn-primary">Ir a la tienda</a>
     {% endif %}
 </div>

@@ -35,14 +35,30 @@ body {
 }
 
 .card-title {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: #252A34; 
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1.0em;
+    color: #252A34; 
+    text-align: center;
 }
 
 .card-img-top {
     width: 100%;
-    height: 50%; /* Sino a 50% va bien*/
+    height: 243px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.card-img-top:hover {
+    transform: scale(1.03); /* Aumenta ligeramente el tamaño de la imagen */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Añade una sombra */
+}
+
+
+
 
 .mt-auto {
     margin-top: auto; /* Hace que el botón se alinee al final del contenido */
@@ -83,6 +99,20 @@ body {
     margin-left: 2px;
     margin-right: 2px;
 }
+
+/* Para los botones del container que tienen las imagenes*/
+
+.btn-img-container {
+    position: relative;
+    width: 100%;
+    border: none;
+    overflow: hidden;
+    background-color: transparent;
+    display: block;
+    transition: transform 0.3s ease; /* Para animaciones, si las quieres */
+}
+
+
 
 #carrito-contador {
     background-color: #FF2E63!;

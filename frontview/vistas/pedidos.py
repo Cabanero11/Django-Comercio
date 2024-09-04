@@ -12,6 +12,14 @@ class PedidoVista(View):
         total = sum(item.producto.precio for item in pedidos)
         print(f'Pedidos: {pedidos}\nTotal: {total}')
         return render(request, 'pedidos.html', {'carrito': pedidos, 'total': total})
+    
+
+class EnviosVista(View):
+    def get(self, request):
+        usuario = request.session.get('usuario')
+        pedidos = Pedido.get_pedido_usuario(usuario)
+        print(f'Pedidos: {pedidos}')
+        return render(request, 'pedidos.html', {'carrito': pedidos})
 
 
 
