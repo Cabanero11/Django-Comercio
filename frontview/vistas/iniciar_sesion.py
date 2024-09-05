@@ -73,8 +73,35 @@ class IniciarSesionCarrito(View):
 
         print(f'Usuario: {usuario} {contraseña} inicio sesion') 
         return render(request, 'iniciar_sesion_carrito.html', {'error': msg_error})  
-    
+
+
+class PerfilUsuario(View):
+    def get(self, request):
+        # Obtiene el ID del usuario desde la sesión
+        usuario_id = request.session.get('usuario')
+
+        # Verifica si el usuario está autenticado (si tiene un ID en la sesión)
+        if not usuario_id:
+            # Redirecciona al login si no está autenticado
+            return redirect('iniciar_sesion')
+
+        # Intenta obtener el usuario desde la base de datos
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+        except Usuario.DoesNotExist:
+            # Si no existe el usuario, redirecciona al login
+            return redirect('iniciar_sesion')
+
+        print(f'Perfil {usuario.nombre} accedió a su perfil.')
+
+        # Pasa los datos del usuario al template
+        return render(request, 'usuario.html', {'usuario': usuario})
+
+
 # Te manda al login otra vez
 def cerrar_sesion(request):
     request.session.clear()
     return redirect('iniciar_sesion')
+
+
+

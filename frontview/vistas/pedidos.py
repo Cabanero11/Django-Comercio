@@ -16,10 +16,22 @@ class PedidoVista(View):
 
 class EnviosVista(View):
     def get(self, request):
-        usuario = request.session.get('usuario')
-        pedidos = Pedido.get_pedido_usuario(usuario)
-        print(f'Pedidos: {pedidos}')
-        return render(request, 'pedidos.html', {'carrito': pedidos})
+        usuario_id = request.session.get('usuario')
+        
+        # Si no hay usuario en la sesión, redirigir al inicio de sesión
+        if not usuario_id:
+            return redirect('iniciar_sesion')
+
+        try:
+            usuario = Usuario.objects.get(id=usuario_id)
+        except Usuario.DoesNotExist:
+            return redirect('iniciar_sesion')
+
+        # Obtener los pedidos del usuario, filtrando por los que no han sido completados
+        pedidos = Pedido.objects.filter(usuario=usuario, estado_pedido=False)
+        
+        # Pasar los pedidos al template
+        return render(request, 'envios.html', {'productos': pedidos})
 
 
 
@@ -87,4 +99,4 @@ def finalizar_pago(request):
     # Limpiar el carrito después de crear los pedidos
     request.session['carrito'] = {}
 
-    return redirect('pedidos')
+    return redirect('envios')

@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from frontview.vistas.home_page import Index, tienda
-from frontview.vistas.iniciar_sesion import IniciarSesion, cerrar_sesion, IniciarSesionCarrito
+from frontview.vistas.iniciar_sesion import IniciarSesion, cerrar_sesion, IniciarSesionCarrito, PerfilUsuario
 from frontview.vistas.carrito import Carrito, limpiar_carrito, incrementar_producto, decrementar_producto
 from frontview.vistas.registrar import Registrar
 from frontview.vistas.cerrar_sesion import Cerrar_sesion
@@ -20,6 +20,8 @@ urlpatterns = [
     path('iniciar_sesion_carrito', IniciarSesionCarrito.as_view(), name='iniciar_sesion_carrito'),
     path('cerrar', cerrar_sesion, name='cerrar_sesion'),
     path('registrar', Registrar.as_view(), name='registrar'),
+    path('perfil_usuario', PerfilUsuario.as_view(), name='perfil_usuario'),
+    
     
     path('producto_info', ProductoVista.as_view(), name='producto_info'),
     path('cerrar', Cerrar_sesion.as_view(), name='cerrar_sesion'),

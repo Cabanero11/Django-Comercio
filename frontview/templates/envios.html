@@ -72,11 +72,17 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <span>{{ item.producto.nombre }}</span>
+                                    <span>{{ item.producto.nombre }} - {{ item.producto.cantidad }} unidades</span>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-primary rounded-pill">{{ item.estado_pedido }}</span>
+                                <span class="badge bg-primary rounded-pill">
+                                    {% if not item.estado_pedido %}
+                                        Preparando
+                                    {% else %}
+                                        {{ item.estado_pedido }}
+                                    {% endif %}
+                                </span>
                             </td>
                             <td class="text-center">
                                 <span class="badge bg-primary rounded-pill">{{ item.fecha }}</span>

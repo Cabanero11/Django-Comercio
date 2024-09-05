@@ -77,6 +77,6 @@ def tienda(request):
     data['carrito_contador'] = request.session.get('carrito_contador', 0)
     print(f'Carrito cont: {request.session.get('carrito_contador')}')
 
-    print(f'Usuario home page: {request.session.get('usuario')}')
+    print(f'Usuario_id home page: {request.session.get('usuario')}')
 
     return render(request, 'tienda.html', data)
