@@ -259,6 +259,10 @@ a.iconos-redes {
     border-radius: 10px;
 }
 
+.btn-link {
+    color: #252A34;
+}
+
 
 .btn-logo:hover {
     border-color: #08D9D6;

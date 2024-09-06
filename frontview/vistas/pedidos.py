@@ -53,6 +53,9 @@ def confirmar_pago(request):
             'precio': producto.precio
         })
 
+    # Redondear a 2 decimales
+    total = round(total, 2)
+
     return render(request, 'pedidos.html', {'carrito': items_carrito, 'total': total})
 
 # Proceso de pagar, daba error de 2 pedidos :(
