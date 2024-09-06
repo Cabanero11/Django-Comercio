@@ -522,3 +522,64 @@ blockquote-footer {
 blockquote-footer cite {
     color: #FF2E63;
 }
+
+
+.tienda {
+    max-height: 400px; 
+    overflow: hidden;
+}
+
+.tienda-imagen {
+    height: 100%;
+    object-fit: cover; 
+}
+
+
+
+
+
+
+/* Controles del carrusel */
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {
+    background-color: #08D9D6; /* Azul principal */
+    border-radius: 50%; /* Redondea las esquinas de las flechas */
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+    border: 2px solid #252A34; /* Borde secundario */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    margin-left: 50px;
+}
+
+.carousel-control-prev-icon:hover, 
+.carousel-control-next-icon:hover {
+    background-color: #FF2E63; /* Cambia el color de fondo al pasar el ratón */
+    transform: scale(1.1); /* Efecto de aumento al pasar el ratón */
+}
+
+/* Controles de botones prev/next del carrusel */
+.carousel-control-prev, 
+.carousel-control-next {
+    width: auto;
+}
+
+.carousel-control-prev {
+    left: -30px; 
+}
+
+.carousel-control-next {
+        right: 30px;
+    }
+    /* Asegura que las flechas estén bien centradas verticalmente */
+    .carousel-control-prev, 
+    .carousel-control-next {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    /* Añade una pequeña animación cuando se hacen clic */
+    .carousel-control-prev:active, 
+    .carousel-control-next:active {
+        transform: translateY(-50%) scale(0.95); 
+    }

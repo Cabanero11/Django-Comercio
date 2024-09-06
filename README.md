@@ -5,5 +5,4 @@ Comercio online creado con Django
 
 
 # TODO:
-- Vista de los Pedidos parecida a carrito
-- Vista de usuario si eso
+- 

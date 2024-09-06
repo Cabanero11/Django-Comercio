@@ -61,7 +61,7 @@ class Productos(models.Model):
         max_length=200, default='', blank=True, null=True
     )
     # Las imagenes se guardan en uploads/productos
-    imagen = models.ImageField(upload_to='uploads/productos/')
+    imagen = models.ImageField(upload_to='productos/')
 
     # Obtener producto por id
     @staticmethod
