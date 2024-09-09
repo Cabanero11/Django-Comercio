@@ -587,3 +587,101 @@ blockquote-footer cite {
     .carousel-control-next:active {
         transform: translateY(-50%) scale(0.95); 
     }
+
+
+
+
+
+
+
+/*
+* VISTA DE DISPOSITIVOS PEQUEÑOS
+*/
+
+
+
+@media (max-width: 709px) {
+    .navbar-nav .nav-item {
+        width: 100%;
+        text-align: right; /* Alinear a la derecha */
+    }
+
+    .btn-arriba {
+        margin-bottom: 10px; /* Espacio entre los botones */
+        margin-top: 6px;
+        width: 100%; /* Botones ocupan el 100% en pantallas pequeñas */
+    }
+
+    /* Ajustar el tamaño de los íconos y el texto para que quepan bien */
+    .navbar-nav .nav-item svg {
+        width: 24px; /* Ajustar tamaño del ícono */
+        height: 24px;
+    }
+
+    .navbar-nav .nav-item button {
+        font-size: 14px; /* Tamaño de texto más pequeño */
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .producto {
+        width: 50%; /* Los productos ocuparán el 50% de ancho en pantallas medianas */
+    }
+
+    .col-md-6 {
+        width: 100%; /* Las columnas ocuparán todo el ancho en pantallas más pequeñas */
+        margin-bottom: 20px; /* Añade un espacio entre las secciones */
+    }
+
+    .img-fluid {
+        max-width: 100%; /* Asegúrate de que la imagen no exceda el ancho de la columna */
+        height: auto; /* Mantén las proporciones de la imagen */
+    }
+
+    .btn-lg {
+        font-size: 1rem; /* Ajusta el tamaño del botón en pantallas pequeñas */
+        padding: 10px 20px;
+    }
+
+    h1 {
+        font-size: 2rem; /* Reduce el tamaño del título */
+    }
+
+    h3 {
+        font-size: 1.5rem; /* Ajusta el tamaño del precio */
+    }
+
+    .lead {
+        font-size: 1rem; /* Ajusta el tamaño del texto descriptivo */
+    }
+
+    .btn {
+        font-size: 1rem; /* Asegura que los botones no sean demasiado grandes */
+    }
+    
+}
+
+@media (max-width: 576px) {
+    .producto {
+        width: 100%; /* Los productos ocuparán el 100% del ancho en pantallas pequeñas */
+    }
+
+    .btn-img-container img {
+        height: auto;
+        width: 100%; /* Aseguramos que la imagen no se deforme y ocupe todo el ancho disponible */
+    }
+
+    .card-body {
+        text-align: center; /* Alineamos el contenido del card al centro */
+    }
+
+    .btn-card-title {
+        font-size: 1.2rem; /* Ajustamos el tamaño del texto en los botones */
+    }
+
+    .btn-margin-bottom {
+        margin-bottom: 10px; /* Espacio entre el botón y los demás elementos */
+    }
+}
