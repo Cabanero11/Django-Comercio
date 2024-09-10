@@ -43,9 +43,9 @@ def confirmar_pago(request):
     # Recalcular el total para asegurarse de que está actualizado
     total = 0
     items_carrito = []
-    for key, item_id, cantidad in carrito.items():
+    for key, cantidad in carrito.items():
         producto_id, talla = key.split('-')
-        producto = Productos.objects.get(id=item_id)
+        producto = Productos.objects.get(id=producto_id)
         precio_producto = producto.precio * cantidad 
         total += precio_producto
         items_carrito.append({
@@ -64,6 +64,7 @@ def confirmar_pago(request):
 def finalizar_pago(request):
     usuario_id = request.session.get('usuario')
     carrito = request.session.get('carrito')
+    
 
     # Si el carrito está vacío, redirigir
     if not carrito:
@@ -77,11 +78,12 @@ def finalizar_pago(request):
     direccion = usuario.direccion  
     telefono = usuario.tefelono  
 
-    for item_id, cantidad in carrito.items():
-        producto = Productos.objects.get(id=item_id)
+    for key, cantidad in carrito.items():
+        producto_id, talla = key.split('-')
+        producto = Productos.objects.get(id=producto_id)
 
         # Intentar recuperar un pedido existente para el usuario y el producto
-        pedido_existente = Pedido.objects.filter(usuario=usuario, producto=producto, estado_pedido=False).first()
+        pedido_existente = Pedido.objects.filter(usuario=usuario, producto=producto, talla=talla, estado_pedido=False).first()
 
         if pedido_existente:
             # Si ya existe un pedido para este producto, actualizamos la cantidad y el precio
@@ -98,7 +100,8 @@ def finalizar_pago(request):
                 direccion=direccion,
                 tefelono=telefono,
                 fecha=datetime.today(),
-                estado_pedido=False
+                estado_pedido=False,
+                talla=talla,
             )
 
     # Limpiar el carrito después de crear los pedidos

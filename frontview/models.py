@@ -118,6 +118,7 @@ class Pedido(models.Model):
     tefelono = models.CharField(max_length=9, default='', blank=True)
     fecha = models.DateField(default=datetime.today)
     estado_pedido = models.BooleanField(default=False)
+    talla = models.CharField(max_length=20, default='M')
 
     # Crear pedido en BD
     def crearPedido(self):
