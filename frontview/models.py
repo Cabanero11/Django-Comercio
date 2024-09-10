@@ -52,6 +52,25 @@ class Usuario(models.Model):
             return False
 
 
+# Tallas de los productos
+class Tallas(models.Model):
+    lista_tallas = [
+        ('XS', 'Extra Small'),
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
+        ('XXL', 'Extra Extra Large'),
+    ]
+
+    nombre = models.CharField(max_length=3, choices=lista_tallas, unique=True)
+
+    # Devolver acronimo de la Talla
+    def __str__(self):
+        return self.get_nombre_display()
+
+
+
 class Productos(models.Model):
     nombre = models.CharField(max_length=50)
     precio = models.FloatField(default=0)
@@ -62,6 +81,13 @@ class Productos(models.Model):
     )
     # Las imagenes se guardan en uploads/productos
     imagen = models.ImageField(upload_to='productos/')
+
+    tallas = models.ManyToManyField(Tallas)
+
+    # Obtener productos por talla
+    @staticmethod
+    def get_productos_por_talla(talla_id):
+        return Productos.objects.filter(tallas__id=talla_id)
 
     # Obtener producto por id
     @staticmethod
@@ -100,3 +126,9 @@ class Pedido(models.Model):
     @staticmethod
     def get_pedido_usuario(id_usuario):
         return Pedido.objects.filter(usuario=id_usuario, estado_pedido=False).order_by('-fecha')
+    
+
+
+
+
+

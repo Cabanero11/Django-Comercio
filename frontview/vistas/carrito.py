@@ -7,6 +7,7 @@ class Carrito(View):
     # Añadir al carrito
     def post(self, request):
         producto_id = request.POST.get('producto')
+        talla = request.POST.get('talla')
         borrar = request.POST.get('borrar')
         carrito = request.session.get('carrito', {})
 
@@ -15,20 +16,23 @@ class Carrito(View):
         else:
             print(f'Producto ID: {producto_id}')
 
+        # Clave producto talla
+        key = f"{producto_id}-{talla}"
+
         if carrito:
-            cantidad = carrito.get(producto_id)
+            cantidad = carrito.get(key)
             if cantidad:
                 if borrar:
                     if cantidad <= 1:
-                        carrito.pop(producto_id)
+                        carrito.pop(key)
                     else:
-                        carrito[producto_id] = cantidad - 1
+                        carrito[key] = cantidad - 1
                 else:
-                    carrito[producto_id] = cantidad + 1
+                    carrito[key] = cantidad + 1
             else:
-                carrito[producto_id] = 1
+                carrito[key] = 1
         else:
-            carrito = {producto_id: 1}
+            carrito = {key: 1}
 
         request.session['carrito'] = carrito
         request.session['carrito_contador'] = sum(carrito.values())
@@ -40,16 +44,19 @@ class Carrito(View):
         carrito = request.session.get('carrito', {})
         productos = []
 
-        for producto_id, cantidad in carrito.items():
+        for key, cantidad in carrito.items():
+            # Separar producto y talla
+            producto_id, talla = key.split('-')  
             try:
                 producto_id = int(producto_id)
                 producto = Productos.objects.get(id=producto_id)
                 productos.append({
                     'producto': producto,
                     'cantidad': cantidad,
+                    'talla': talla  
                 })
             except (ValueError, Productos.DoesNotExist):
-                carrito.pop(producto_id)
+                carrito.pop(key)
 
         request.session['carrito'] = carrito
         request.session['carrito_contador'] = sum(carrito.values())
@@ -66,9 +73,12 @@ def limpiar_carrito(request):
     # Obtenemos el carrito actual
     carrito = request.session.get('carrito', {})
     
+    talla = request.POST.get('talla')
+    key = f"{producto_id}-{talla}"
+
     # Eliminamos el producto del carrito si existe
-    if producto_id in carrito:
-        del carrito[producto_id]
+    if key in carrito:
+        del carrito[key]
     
     # Guardamos el carrito actualizado en la sesión
     request.session['carrito'] = carrito
@@ -78,20 +88,7 @@ def limpiar_carrito(request):
     
     return redirect('carrito')
 
-# Limpiar un producto en especifico
-def limpiar_producto_carro(request, producto_id):
-    carrito = request.session.get('carrito', {})
 
-    if producto_id in carrito:
-        carrito.pop(producto_id)
-
-    print(f'Eliminado {producto_id}')
-
-    # Cambiar a carro actualizado, sin el producto
-    request.session['carrito'] = carrito
-    request.session['carrito_contador'] = sum(carrito.values())
-
-    return redirect('carrito')
 
 # Incrementar la cantidad del producto que esta en el carrito
 def incrementar_producto(request):
@@ -100,11 +97,16 @@ def incrementar_producto(request):
     # Obtenemos el ID del producto
     producto_id = request.POST.get('producto_id')
 
-    cantidad = carrito.get(producto_id)
+    talla = request.POST.get('talla')
+
+    key = f"{producto_id}-{talla}"
+
+    cantidad = carrito.get(key)
 
     if cantidad:
-        carrito[producto_id] = cantidad + 1
-
+        carrito[key] = cantidad + 1
+    
+    
     print(f'Incrementado {producto_id}')
 
     # Cambiar a carro actualizado, sin el producto
@@ -120,11 +122,15 @@ def decrementar_producto(request):
     # Obtenemos el ID del producto
     producto_id = request.POST.get('producto_id')
 
-    cantidad = carrito.get(producto_id)
+    talla = request.POST.get('talla')
+
+    key = f"{producto_id}-{talla}"
+
+    cantidad = carrito.get(key)
 
     # -1 si hay 2 elementos solo
     if cantidad > 1:
-        carrito[producto_id] = cantidad - 1
+        carrito[key] = cantidad - 1
 
     print(f'Decrementado {producto_id}')
 

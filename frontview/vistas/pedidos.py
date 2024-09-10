@@ -43,14 +43,16 @@ def confirmar_pago(request):
     # Recalcular el total para asegurarse de que está actualizado
     total = 0
     items_carrito = []
-    for item_id, cantidad in carrito.items():
+    for key, item_id, cantidad in carrito.items():
+        producto_id, talla = key.split('-')
         producto = Productos.objects.get(id=item_id)
         precio_producto = producto.precio * cantidad 
         total += precio_producto
         items_carrito.append({
             'producto': producto,
             'cantidad': cantidad,
-            'precio': producto.precio
+            'precio': producto.precio,
+            'talla': talla,
         })
 
     # Redondear a 2 decimales

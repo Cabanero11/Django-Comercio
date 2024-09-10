@@ -306,6 +306,23 @@ a.iconos-redes {
     border-radius: 0 10px 10px 0; /* Redondea solo el borde derecho del botón */
 }
 
+
+.btn-tallas {
+    background-color: #252A34; /* color gris predeterminado */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-tallas.selected {
+    background-color: #08D9D6; /* color azul cuando esté seleccionado */
+    color: white;
+    border: 2px solid #09cdc9;
+}
+
+
 .shadow-lg {
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); /* Agrega una sombra suave para resaltar el formulario */
 }

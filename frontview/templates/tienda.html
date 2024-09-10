@@ -80,16 +80,16 @@
         </form>
     </div>
 
-    <!-- Listado de productos -->
+    <!-- Listado de primeros 8 productos -->
     <div class="container mt-4">
         <div class="row" id="productos-container">
-            {% for producto in productos %}
+            {% for producto in productos|slice:":8" %}
                 <div class="col-md-3 mb-3 producto" data-nombre="{{ producto.nombre|lower }}">
                     <form method="post" action="{% url 'producto_info' %}" id="form_info">
                         {% csrf_token %}
                         <input type="hidden" name="producto" value="{{ producto.id }}">
                         <button type="submit" class="btn-img-container">
-                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                            <img src="{{ producto.imagen.url }}" loading="lazy "class="card-img-top" alt="{{ producto.nombre }}">
                         </button>
                     </form>
                     <div class="card-body">
@@ -136,6 +136,40 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Siguiente</span>
             </button>
+        </div>
+    </div>
+
+    <!-- Listado de productos despues de 8 -->
+    <div class="container mt-4">
+        <div class="row" id="productos-container">
+            {% for producto in productos|slice:"8:" %}
+                <div class="col-md-3 mb-3 producto" data-nombre="{{ producto.nombre|lower }}">
+                    <form method="post" action="{% url 'producto_info' %}" id="form_info">
+                        {% csrf_token %}
+                        <input type="hidden" name="producto" value="{{ producto.id }}">
+                        <button type="submit" class="btn-img-container">
+                            <img src="{{ producto.imagen.url }}" loading="lazy "class="card-img-top" alt="{{ producto.nombre }}">
+                        </button>
+                    </form>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <form method="post" action="{% url 'producto_info' %}" id="form_info">
+                                {% csrf_token %}
+                                <input type="hidden" name="producto" value="{{ producto.id }}">
+                                <button type="submit" class="btn-card-title">
+                                    {{ producto.nombre }}
+                                </button>
+                            </form>
+                        </h5>
+                        <p class="card-text"><strong>{{ producto.precio }}€</strong></p>
+                        <form method="post" action="{% url 'carrito' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <button type="submit" class="btn btn-success w-100 btn-margin-bottom">Añadir al carrito</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
