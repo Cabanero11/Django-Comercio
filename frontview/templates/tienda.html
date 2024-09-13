@@ -89,7 +89,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="producto" value="{{ producto.id }}">
                         <button type="submit" class="btn-img-container">
-                            <img src="{{ producto.imagen.url }}" loading="lazy "class="card-img-top" alt="{{ producto.nombre }}">
+                            <img src="{{ producto.imagen.url }}" loading="lazy" class="card-img-top" alt="{{ producto.nombre }}">
                         </button>
                     </form>
                     <div class="card-body">
@@ -120,11 +120,17 @@
             <div class="carousel-inner">
                 {% for producto in productos_aleatorios %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ producto.imagen.url }}" class="d-block w-100 tienda-imagen" alt="{{ producto.nombre }}">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>{{ producto.nombre }}</h5>
-                            <p>{{ producto.descripcion }}</p>
-                        </div>
+                        <form method="post" action="{% url 'producto_info' %}" id="form_info_carousel">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto" value="{{ producto.id }}">
+                            <button type="submit" class="btn-img-container">
+                                <img src="{{ producto.imagen.url }}" loading="lazy" class="d-block w-100 tienda-imagen" alt="{{ producto.nombre }}">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 class="carousel-h5">{{ producto.nombre }}</h5>
+                                    <p>{{ producto.descripcion }}</p>
+                                </div>
+                            </button>
+                        </form>
                     </div>
                 {% endfor %}
             </div>
@@ -148,7 +154,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="producto" value="{{ producto.id }}">
                         <button type="submit" class="btn-img-container">
-                            <img src="{{ producto.imagen.url }}" loading="lazy "class="card-img-top" alt="{{ producto.nombre }}">
+                            <img src="{{ producto.imagen.url }}" loading="lazy" class="card-img-top" alt="{{ producto.nombre }}">
                         </button>
                     </form>
                     <div class="card-body">

@@ -340,17 +340,7 @@ input[type="password"] {
 }
 
 
-/* Carousel dio mio */
 
-.carousel-item {
-    height: 100%;
-}
-
-.carousel-inner img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
 
 
 /* From Uiverse.io by MuhammadHasann */ 
@@ -545,8 +535,12 @@ blockquote-footer cite {
 }
 
 
+
+
+/* CARRUSEL */
+
 .tienda {
-    max-height: 400px; 
+    max-height: 500px; 
     overflow: hidden;
 }
 
@@ -556,57 +550,84 @@ blockquote-footer cite {
 }
 
 
+.carousel-item {
+    height: 500px; /* Deja que la altura se ajuste al contenido (imagen) */
+}
 
+.btn-carousel-item {
+    display: block;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left; /* Para alinear el contenido dentro del formulario/enlace */
+}
 
+.carousel-h5 {
+    color: #EAEAEA;
+    -webkit-text-stroke: 1px #252A34;
+}
 
+.carousel-p {
+    color: #EAEAEA;
+    -webkit-text-stroke: 1px #252A34;
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 100%; /* Deja que la imagen mantenga su proporción */
+    object-fit: contain; /* Asegura que no se deforme */
+}
 
 /* Controles del carrusel */
 .carousel-control-prev-icon, 
 .carousel-control-next-icon {
-    background-color: #08D9D6; /* Azul principal */
-    border-radius: 50%; /* Redondea las esquinas de las flechas */
+    background-color: #08D9D6;
+    border-radius: 50%;
     width: 50px;
     height: 50px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
-    border: 2px solid #252A34; /* Borde secundario */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #252A34;
     transition: transform 0.3s ease, background-color 0.3s ease;
-    margin-left: 50px;
+}
+
+/* Flechas más centradas y adaptadas al contenido */
+.carousel-control-prev, 
+.carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10%; /* Un ancho mayor para que no queden demasiado al borde */
+    height: 100%; /* Que ocupen todo el alto del contenedor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.1); /* Fondo semi-transparente para destacar */
+    transition: background-color 0.3s ease;
+}
+
+.carousel-control-prev:hover, 
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* Cambio de fondo al pasar el ratón */
 }
 
 .carousel-control-prev-icon:hover, 
 .carousel-control-next-icon:hover {
-    background-color: #FF2E63; /* Cambia el color de fondo al pasar el ratón */
-    transform: scale(1.1); /* Efecto de aumento al pasar el ratón */
+    background-color: #FF2E63;
+    transform: scale(1.1);
 }
 
-/* Controles de botones prev/next del carrusel */
 .carousel-control-prev, 
 .carousel-control-next {
-    width: auto;
+    width: 10%; /* Un ancho que se adapta bien a los lados */
 }
 
 .carousel-control-prev {
-    left: -30px; 
+    left: 0; /* Que quede pegado al borde */
 }
 
 .carousel-control-next {
-        right: 30px;
-    }
-    /* Asegura que las flechas estén bien centradas verticalmente */
-    .carousel-control-prev, 
-    .carousel-control-next {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    
-    /* Añade una pequeña animación cuando se hacen clic */
-    .carousel-control-prev:active, 
-    .carousel-control-next:active {
-        transform: translateY(-50%) scale(0.95); 
-    }
-
-
-
+    right: 0; /* Pegado al borde derecho */
+}
 
 
 
