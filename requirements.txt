@@ -1,2 +1,1 @@
-django
-environs
+Django==4.2.15

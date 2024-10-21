@@ -1,8 +1,20 @@
 # Django-Comercio
-Comercio online creado con Django
+E-Commerce built with Django, JavaScript , Bootstrap and CSS. Front-end and Back-end built :D
 
-## :D
+# Run project
+(install django first)
+python .\manage.py
 
+## Make migrations (if you change the models of models.py)
+python .\manage.py makemigrations
+python .\manage.py migrate
 
-# TODO:
-- 
+## Settings
+Check tienda/settings.py
+For the settings of the projects
+
+### In launch.json
+You can change the port in args to something else, default is 9000
+
+## If Visual Code
+You can run the project with Ctrl + F5

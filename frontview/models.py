@@ -2,6 +2,11 @@
 # python .\manage.py makemigrations
 # python .\manage.py migrate
 
+"""
+Este módulo contiene los modulos para la aplicación Django.
+
+Contiene la lógica de los datos de la aplicación 'frontview'.
+"""
 
 
 from django.db import models
