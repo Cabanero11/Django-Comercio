@@ -6,11 +6,41 @@ from django.views import View
 
 
 class Registrar(View):
+    """
+    View for user registration.
+
+    Methods:
+        get(request): Renders the 'registrar.html' template.
+        post(request): Handles user registration form submission and validates the input.
+        validarUsuario(user): Validates the user details for registration and returns any error message.
+    """
     
     def get(self, request):
+        """
+        Renders the registration page.
+
+        Args:
+            request (HttpRequest): The HTTP request.
+
+        Returns:
+            HttpResponse: The rendered 'registrar.html' page.
+        """
+
         return render(request, 'registrar.html')
     
     def post(self, request):
+        """
+        Handles the user registration form submission, validates the data, and saves the user 
+        to the database if valid.
+
+        Args:
+            request (HttpRequest): The HTTP request containing user registration data.
+
+        Returns:
+            HttpResponse: Redirects to the login page on success or re-renders the 
+                          registration page with error messages on failure.
+        """
+
         # Obtener datos del 'Usuario'
         post_data = request.POST
         nombre = post_data.get('nombre')
@@ -47,6 +77,16 @@ class Registrar(View):
 
     # Mensajes de error posibles creo
     def validarUsuario(self, user):
+        """
+        Validates the user registration data.
+
+        Args:
+            user (Usuario): The user object to validate.
+
+        Returns:
+            str: An error message if validation fails, or None if validation succeeds.
+        """
+
         msg_error = None
         if (not user.nombre): 
             msg_error = "Por favor introduce un nombre !!"

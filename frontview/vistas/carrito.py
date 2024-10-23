@@ -2,10 +2,28 @@ from django.shortcuts import render, redirect
 from django.views import View
 from frontview.models import Productos
 
+"""
+View for the shopping cart to add, remove products and view the cart.
+"""
+
 class Carrito(View):
+    """
+    Manages the shopping cart actions such as adding and removing products.
+    """
 
     # Añadir al carrito
     def post(self, request):
+        """
+        Adds a product to the cart or removes it based on the request.
+
+        Args:
+            request (HttpRequest): The HTTP request containing the product and action.
+
+        Returns:
+            HttpResponse: Redirects to the store page after updating the cart.
+        """
+
+
         producto_id = request.POST.get('producto')
         talla = request.POST.get('talla')
         borrar = request.POST.get('borrar')
@@ -41,6 +59,16 @@ class Carrito(View):
 
     # Icono carrito
     def get(self, request):
+        """
+        Retrieves and displays the shopping cart.
+
+        Args:
+            request (HttpRequest): The HTTP request.
+
+        Returns:
+            HttpResponse: Renders the shopping cart page with the list of products.
+        """
+
         carrito = request.session.get('carrito', {})
         productos = []
 
@@ -67,6 +95,17 @@ class Carrito(View):
 
 # Función para limpiar el carrito entero
 def limpiar_carrito(request):
+    """
+    Clears the entire shopping cart or removes a specific product.
+
+    Args:
+        request (HttpRequest): The HTTP request containing the product to be removed.
+
+    Returns:
+        HttpResponse: Redirects to the cart page after clearing the cart.
+    """
+
+
     # Obtenemos el ID del producto a eliminar
     producto_id = request.POST.get('producto_id')
     
@@ -92,6 +131,16 @@ def limpiar_carrito(request):
 
 # Incrementar la cantidad del producto que esta en el carrito
 def incrementar_producto(request):
+    """
+    Increments the quantity of a product in the cart.
+
+    Args:
+        request (HttpRequest): The HTTP request containing the product to be incremented.
+
+    Returns:
+        HttpResponse: Redirects to the cart page after updating the quantity.
+    """
+
     carrito = request.session.get('carrito', {})
 
     # Obtenemos el ID del producto
@@ -117,6 +166,17 @@ def incrementar_producto(request):
 
 # Decrementar la cantidad del producto que esta en el carrito
 def decrementar_producto(request):
+    """
+    Decrements the quantity of a product in the cart, removing it if the quantity is 1.
+
+    Args:
+        request (HttpRequest): The HTTP request containing the product to be decremented.
+
+    Returns:
+        HttpResponse: Redirects to the cart page after updating the quantity.
+    """
+
+
     carrito = request.session.get('carrito', {})
 
     # Obtenemos el ID del producto

@@ -3,9 +3,9 @@
 # python .\manage.py migrate
 
 """
-Este módulo contiene los modulos para la aplicación Django.
+This module contains the data models for the Django application.
 
-Contiene la lógica de los datos de la aplicación 'frontview'.
+It includes the logic for handling the 'frontview' application's data.
 """
 
 
@@ -14,19 +14,52 @@ from datetime import datetime
 
 # Modelo de categorias de productos (ropa xd)
 class Categoria(models.Model):
+
+    """
+    Model representing product categories (clothing).
+
+    Attributes:
+        nombre (CharField): Name of the category.
+    """
+
     nombre = models.CharField(max_length=50)
 
     # Metodo estatico para obtener todas las categorias
     @staticmethod
     def get_all_categorias():
+        """
+        Retrieve all categories from the database.
+
+        Returns:
+            QuerySet: All category records.
+        """
         return Categoria.objects.all()
     
     # De momento solo nombre
     def __str__(self):
+        """
+        String representation of the category object.
+
+        Returns:
+            str: Name of the category.
+        """
         return self.nombre
     
 
 class Usuario(models.Model):
+    """
+    Model representing a user in the system.
+
+    Attributes:
+        nombre (CharField): First name of the user.
+        apellidos (CharField): Last name of the user.
+        usuario (CharField): Username, must be unique.
+        email (EmailField): Email address, must be unique.
+        contraseña (CharField): Password of the user.
+        direccion (CharField): Optional address field.
+        tefelono (CharField): Optional phone number field.
+    """
+
     nombre = models.CharField(max_length=50)
     apellidos = models.CharField(max_length=60)
     usuario = models.CharField(max_length=20, unique=True)
@@ -38,11 +71,24 @@ class Usuario(models.Model):
 
     # Se registra y guarda en la BD (SQlite)
     def regristrar(self):
+        """
+        Registers and saves the user in the database.
+        """
         self.save()
 
     # Si el email le corresponde
     @staticmethod
     def get_usuario_por_email(email):
+        """
+        Retrieves a user by their email.
+
+        Args:
+            email (str): The email address to search for.
+
+        Returns:
+            Usuario: The user object if found, or None.
+        """
+
         try:
             return Usuario.objects.get(email=email)
         except Exception as e:
@@ -51,6 +97,16 @@ class Usuario(models.Model):
     
     # Si existe email o usuario ya creado
     def existeUsuario(self):
+        """
+        Retrieves a user by their email.
+
+        Args:
+            email (str): The email address to search for.
+
+        Returns:
+            Usuario: The user object if found, or None.
+        """
+
         if Usuario.objects.filter(email=self.email) or Usuario.objects.filter(usuario=self.usuario):
             return True
         else:
@@ -59,6 +115,13 @@ class Usuario(models.Model):
 
 # Tallas de los productos
 class Tallas(models.Model):
+    """
+    Model representing product sizes.
+
+    Attributes:
+        nombre (CharField): The size identifier (XS, S, M, ...)
+    """
+
     lista_tallas = [
         ('XS', 'Extra Small'),
         ('S', 'Small'),
@@ -72,11 +135,32 @@ class Tallas(models.Model):
 
     # Devolver acronimo de la Talla
     def __str__(self):
+
+        """
+        String representation of the size object.
+
+        Returns:
+            str: The size acronym (e.g., S, M, L).
+        """
+
         return self.get_nombre_display()
 
 
 
 class Productos(models.Model):
+    """
+    Model representing a product in the system.
+
+    Attributes:
+        nombre (CharField): Product name.
+        precio (FloatField): Product price.
+        categoria (ForeignKey): Category the product belongs to.
+        descripcion (CharField): Optional description of the product.
+        imagen (ImageField): Image associated with the product.
+        tallas (ManyToManyField): Available sizes for the product.
+    """
+
+
     nombre = models.CharField(max_length=50)
     precio = models.FloatField(default=0)
     # Añadir como id la categoria al producto
@@ -92,21 +176,58 @@ class Productos(models.Model):
     # Obtener productos por talla
     @staticmethod
     def get_productos_por_talla(talla_id):
+        """
+        Retrieves all products associated with a specific size.
+
+        Args:
+            talla_id (int): The size ID.
+
+        Returns:
+            QuerySet: Products associated with the given size.
+        """
+
         return Productos.objects.filter(tallas__id=talla_id)
 
     # Obtener producto por id
     @staticmethod
     def get_producto_por_id(ids):
+        """
+        Retrieves a product by its ID.
+
+        Args:
+            ids (int): The product ID.
+
+        Returns:
+            QuerySet: The product matching the given ID.
+        """
+
         return Productos.objects.filter(id=ids)
     
     # Obtener todos los productos
     @staticmethod
     def get_all_productos():
+        """
+        Retrieves all products.
+
+        Returns:
+            QuerySet: All product records.
+        """
+
         return Productos.objects.all()
     
     # Obtener todos los productos de una categoria
     @staticmethod
     def get_all_productos_categoria(id_categoria):
+        """
+        Retrieves all products for a specific category.
+
+        Args:
+            id_categoria (int): The category ID.
+
+        Returns:
+            QuerySet: Products belonging to the given category.
+        """
+
         if id_categoria:
             return Productos.objects.filter(categoria=id_categoria)
         else:
@@ -115,6 +236,22 @@ class Productos(models.Model):
 
 
 class Pedido(models.Model):
+    """
+    Model representing an order in the system.
+
+    Attributes:
+        producto (ForeignKey): Product associated with the order.
+        usuario (ForeignKey): User who placed the order.
+        cantidad (IntegerField): Quantity of the product ordered.
+        precio (FloatField): Total price of the order.
+        direccion (CharField): Shipping address.
+        tefelono (CharField): Contact phone number.
+        fecha (DateField): Order date.
+        estado_pedido (BooleanField): Whether the order is completed.
+        talla (CharField): Size of the product ordered.
+    """
+
+
     producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1)
@@ -127,10 +264,24 @@ class Pedido(models.Model):
 
     # Crear pedido en BD
     def crearPedido(self):
+        """
+        Creates and saves the order in the database.
+        """
+
         self.save()
 
     @staticmethod
     def get_pedido_usuario(id_usuario):
+        """
+        Retrieves all pending orders for a specific user.
+
+        Args:
+            id_usuario (int): The user's ID.
+
+        Returns:
+            QuerySet: Orders that are not yet completed, sorted by date.
+        """
+        
         return Pedido.objects.filter(usuario=id_usuario, estado_pedido=False).order_by('-fecha')
     
 
